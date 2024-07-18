@@ -1,48 +1,59 @@
 package com.tutorialsninja.qa.TestCases;
 
-import org.openqa.selenium.By;
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class LogoutTest {
+import com.tutorialsninja.qa.Pages.AccountLogoutPage;
+import com.tutorialsninja.qa.Pages.AccountPage;
+import com.tutorialsninja.qa.Pages.HomePage;
+import com.tutorialsninja.qa.Pages.LoginPage;
+import com.tutorialsninja.qa.TestBase.TestBase;
+
+public class LogoutTest  extends TestBase {
+	
+	public LogoutTest() throws IOException {
+		super();
+	}
 	
 	public WebDriver driver;
+	public HomePage homepage;
+	public LoginPage loginpage;
+	public AccountPage accountpage;
+	public AccountLogoutPage accountlogoutpage;
 	
 	@BeforeMethod
 	public void setup() {
 		
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("https://tutorialsninja.com/demo/");
-		driver.findElement(By.linkText("My Account")).click();
-		driver.findElement(By.linkText("Login")).click();
-		driver.findElement(By.id("input-email")).sendKeys("seleniumpanda@gmail.com");
-		driver.findElement(By.id("input-password")).sendKeys("Selenium@123");
-		driver.findElement(By.cssSelector("input.btn.btn-primary")).click();
-		Assert.assertTrue(driver.findElement(By.linkText("Edit your account information")).isDisplayed());
+		driver =  initializeBrowserAndOpenApplication(prop.getProperty("browser"));
+		homepage = new HomePage(driver);
+		loginpage = new LoginPage(driver);
+		accountpage = new AccountPage(driver);
+		accountlogoutpage = new AccountLogoutPage(driver);
+		homepage.clickOnMyAccountDropdown();
+		homepage.clickOnLoginOption();
+		loginpage.enterEmailInEmailTextBox(prop.getProperty("validEmail"));
+		loginpage.enterPasswordInPasswordTextBox(prop.getProperty("validPassword"));
+		loginpage.clickOnLoginButton();
+		Assert.assertTrue(accountpage.editAccountInfoLinkIsDisplayed());
 	}
 
 	@Test (priority = 1)
 	public void verifyLogoutButtonIsAvailable() {
-		driver.findElement(By.linkText("My Account")).click();
-		Assert.assertTrue(driver.findElement(By.linkText("Logout")).isDisplayed());
-	}
-	
-	@Test (priority=2) 
-	public void verifyLogoutButtonIsFunctional() {
-		driver.findElement(By.linkText("My Account")).click();
-		Assert.assertTrue(driver.findElement(By.linkText("Logout")).isEnabled());
+		homepage.clickOnMyAccountDropdown();
+		Assert.assertTrue(homepage.logoutButtonIsDisplayed());
 	}
 	
 	@Test (priority=3) 
 	public void verifyLogoutFunctionality() {
-		driver.findElement(By.linkText("My Account")).click();
-		driver.findElement(By.linkText("Logout")).click();
-		Assert.assertTrue(driver.findElement(By.xpath("//*[@id='content']/h1")).isDisplayed());
+		homepage.clickOnMyAccountDropdown();
+		homepage.clickOnLogoutButton();
+		
+		Assert.assertTrue(accountlogoutpage.accountLogoutMessageIsDisplayed());
 	}
 	
 	@AfterMethod

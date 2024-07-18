@@ -1,52 +1,76 @@
 package com.tutorialsninja.qa.TestCases;
 
-import org.openqa.selenium.By;
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class ShoppingCartTest {
-	
+import com.tutorialsninja.qa.Pages.HomePage;
+import com.tutorialsninja.qa.Pages.ProductDetailsPage;
+import com.tutorialsninja.qa.Pages.ProductPage;
+import com.tutorialsninja.qa.Pages.ShoppingCartPage;
+import com.tutorialsninja.qa.TestBase.TestBase;
+
+public class ShoppingCartTest extends TestBase {
+
+	public ShoppingCartTest() throws IOException {
+		super();
+	}
+
 	public WebDriver driver;
-	
+	public HomePage homepage;
+	public ProductPage productpage;
+	public ProductDetailsPage productdetailspage;
+	public ShoppingCartPage shoppingcartpage;
+
 	@BeforeMethod
 	public void setup() {
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("https://tutorialsninja.com/demo/");
-		driver.findElement(By.linkText("My Account")).click();
-		driver.findElement(By.linkText("Login")).click();
-		driver.findElement(By.id("input-email")).sendKeys("seleniumpanda@gmail.com");
-		driver.findElement(By.id("input-password")).sendKeys("Selenium@123");
-		driver.findElement(By.cssSelector("input.btn.btn-primary")).click();
-		Assert.assertTrue(driver.findElement(By.linkText("Edit your account information")).isDisplayed());
+		driver = initializeBrowserAndOpenApplication(prop.getProperty("browser"));
+		homepage = new HomePage(driver);
+		shoppingcartpage = new ShoppingCartPage(driver);
+		productpage = new ProductPage(driver);
+		productdetailspage = new ProductDetailsPage(driver);
 	}
-	
-	@Test (priority=1)
+
+	@Test(priority = 1)
 	public void verifyShoppingCartButtonIsAvilable() {
-		Assert.assertTrue(driver.findElement(By.xpath("//span[text() = 'Shopping Cart']")).isDisplayed());
+		Assert.assertTrue(homepage.shoppingCartButtonIsDisplayed());
+	}
+
+	@Test(priority = 2)
+	public void verifyEmptyShoppingCartSearch() {
+		homepage.clickOnShoppingCartButton();
+		Assert.assertTrue(shoppingcartpage.shoppingCartHeaderIsDisplayed());
+	}
+
+	@Test(priority = 3)
+	public void verifyAddToCartFunctionalityFromItemButton() {
+		homepage.enterProductInTheSearchTextbox(dataProp.getProperty("validProduct"));
+		homepage.clickOnSeachButton();
+		productpage.clickOnAddToCartButton();
+		productdetailspage.clickOnAddToCartButton();
+		homepage.clickOnItemsButton();
+		Assert.assertTrue(productpage.validProductIsDisplayed());
 	}
 	
-	@Test (priority=2)
-	public void verifyShoppingCartButtonIsFunctional() {
-		driver.findElement(By.xpath("//span[text() = 'Shopping Cart']")).click();
-		Assert.assertTrue(driver.findElement(By.xpath("//*[@id='content']/h1")).isDisplayed());
-	}
-	
-	@Test (priority= 3)
-	public void verifyAddToCartButtonFunctionalOfAnAvailableAndValidProduct() {
-		driver.findElement(By.name("search")).sendKeys("iPhone");
-		driver.findElement(By.cssSelector("button.btn.btn-default.btn-lg")).click();
-		driver.findElement(By.xpath("//span[text() = 'Add to Cart']")).click();
+	@Test(priority = 3)
+	public void verifyAddToCartFunctionalityFromShoppingCartPage() {
+		homepage.enterProductInTheSearchTextbox(dataProp.getProperty("validProduct"));
+		homepage.clickOnSeachButton();
+		productpage.clickOnAddToCartButton();
+		productdetailspage.clickOnAddToCartButton();
+		homepage.clickOnItemsButton();
+		homepage.clickOnViewCartButton();
+		Assert.assertTrue(shoppingcartpage.validProductIsDisplayed());
 		
-		String expectedSuccessfulAddedToCartMessage = "Success: You have added iPhone to your shopping cart!";
-		String actualSuccessfulAddedToCartMessage = driver.findElement(By.xpath("//*[@id='product-search']/div")).getText();
-		System.out.println("---------------------------");
-		System.out.println("The message is " + actualSuccessfulAddedToCartMessage);
-		System.out.println("---------------------------");
-		Assert.assertTrue(expectedSuccessfulAddedToCartMessage.equals(actualSuccessfulAddedToCartMessage));
+	}
+
+	@AfterMethod
+	public void tearDown() {
+		driver.quit();
 	}
 
 }

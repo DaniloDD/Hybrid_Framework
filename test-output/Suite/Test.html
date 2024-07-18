@@ -1,0 +1,210 @@
+<html>
+<head>
+<title>TestNG:  Test</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>Test</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>26/0/0</td>
+</tr><tr>
+<td>Started on:</td><td>Thu Jul 11 17:52:01 EDT 2024</td>
+</tr>
+<tr><td>Total time:</td><td>128 seconds (128992 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td><b>Attribute(s)</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.LoginTest.verifyLoginWithValidEmailAndInvalidPassword()'><b>verifyLoginWithValidEmailAndInvalidPassword</b><br>Test class: com.tutorialsninja.qa.TestCases.LoginTest</td>
+<td></td>
+<td>1</td>
+<td>com.tutorialsninja.qa.TestCases.LoginTest@6b8ca3c8</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.SearchTest.verifySearchWithInvalidProduct()'><b>verifySearchWithInvalidProduct</b><br>Test class: com.tutorialsninja.qa.TestCases.SearchTest</td>
+<td></td>
+<td>0</td>
+<td>com.tutorialsninja.qa.TestCases.SearchTest@8317c52</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.LoginTest.verifyLoginWithEmptyPasswordAndValidEmail()'><b>verifyLoginWithEmptyPasswordAndValidEmail</b><br>Test class: com.tutorialsninja.qa.TestCases.LoginTest</td>
+<td></td>
+<td>0</td>
+<td>com.tutorialsninja.qa.TestCases.LoginTest@6b8ca3c8</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.RegisterTest.verifyRegisterWithNoDetails()'><b>verifyRegisterWithNoDetails</b><br>Test class: com.tutorialsninja.qa.TestCases.RegisterTest</td>
+<td></td>
+<td>0</td>
+<td>com.tutorialsninja.qa.TestCases.RegisterTest@10959ece</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.LoginTest.vefiryLoginWithValidCredentials()'><b>vefiryLoginWithValidCredentials</b><br>Test class: com.tutorialsninja.qa.TestCases.LoginTest</td>
+<td></td>
+<td>1</td>
+<td>com.tutorialsninja.qa.TestCases.LoginTest@6b8ca3c8</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.HomepageTest.verifyCurrentURL()'><b>verifyCurrentURL</b><br>Test class: com.tutorialsninja.qa.TestCases.HomepageTest</td>
+<td></td>
+<td>0</td>
+<td>com.tutorialsninja.qa.TestCases.HomepageTest@7671cb68</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.HomepageTest.verifyFeaturedSectionIsAvailable()'><b>verifyFeaturedSectionIsAvailable</b><br>Test class: com.tutorialsninja.qa.TestCases.HomepageTest</td>
+<td></td>
+<td>0</td>
+<td>com.tutorialsninja.qa.TestCases.HomepageTest@7671cb68</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.SearchTest.verifySearchButtonIsFunctional()'><b>verifySearchButtonIsFunctional</b><br>Test class: com.tutorialsninja.qa.TestCases.SearchTest</td>
+<td></td>
+<td>0</td>
+<td>com.tutorialsninja.qa.TestCases.SearchTest@8317c52</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.HomepageTest.verifyTitlePage()'><b>verifyTitlePage</b><br>Test class: com.tutorialsninja.qa.TestCases.HomepageTest</td>
+<td></td>
+<td>0</td>
+<td>com.tutorialsninja.qa.TestCases.HomepageTest@7671cb68</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.RegisterTest.verifyRegisterWithInvalidConfirmPassword()'><b>verifyRegisterWithInvalidConfirmPassword</b><br>Test class: com.tutorialsninja.qa.TestCases.RegisterTest</td>
+<td></td>
+<td>1</td>
+<td>com.tutorialsninja.qa.TestCases.RegisterTest@10959ece</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.RegisterTest.verifyRegisterWithExistingEmail()'><b>verifyRegisterWithExistingEmail</b><br>Test class: com.tutorialsninja.qa.TestCases.RegisterTest</td>
+<td></td>
+<td>1</td>
+<td>com.tutorialsninja.qa.TestCases.RegisterTest@10959ece</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.LoginTest.verifyLoginWithEmptyEmailAndValidPassword()'><b>verifyLoginWithEmptyEmailAndValidPassword</b><br>Test class: com.tutorialsninja.qa.TestCases.LoginTest</td>
+<td></td>
+<td>1</td>
+<td>com.tutorialsninja.qa.TestCases.LoginTest@6b8ca3c8</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.LoginTest.verifyLoginWithInvalidEmailAndValidPassword()'><b>verifyLoginWithInvalidEmailAndValidPassword</b><br>Test class: com.tutorialsninja.qa.TestCases.LoginTest</td>
+<td></td>
+<td>0</td>
+<td>com.tutorialsninja.qa.TestCases.LoginTest@6b8ca3c8</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.HomepageTest.FooterIsAvailable()'><b>FooterIsAvailable</b><br>Test class: com.tutorialsninja.qa.TestCases.HomepageTest</td>
+<td></td>
+<td>0</td>
+<td>com.tutorialsninja.qa.TestCases.HomepageTest@7671cb68</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.LogoutTest.verifyLogoutButtonIsFunctional()'><b>verifyLogoutButtonIsFunctional</b><br>Test class: com.tutorialsninja.qa.TestCases.LogoutTest</td>
+<td></td>
+<td>0</td>
+<td>com.tutorialsninja.qa.TestCases.LogoutTest@49dc7102</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.SearchTest.verifySearchWithValidProduct()'><b>verifySearchWithValidProduct</b><br>Test class: com.tutorialsninja.qa.TestCases.SearchTest</td>
+<td></td>
+<td>0</td>
+<td>com.tutorialsninja.qa.TestCases.SearchTest@8317c52</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.SearchTest.verifySearchBarIsAvilable()'><b>verifySearchBarIsAvilable</b><br>Test class: com.tutorialsninja.qa.TestCases.SearchTest</td>
+<td></td>
+<td>0</td>
+<td>com.tutorialsninja.qa.TestCases.SearchTest@8317c52</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.ShoppingCartTest.verifyShoppingCartButtonIsAvilable()'><b>verifyShoppingCartButtonIsAvilable</b><br>Test class: com.tutorialsninja.qa.TestCases.ShoppingCartTest</td>
+<td></td>
+<td>0</td>
+<td>com.tutorialsninja.qa.TestCases.ShoppingCartTest@68c72235</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.ShoppingCartTest.verifyShoppingCartButtonIsFunctional()'><b>verifyShoppingCartButtonIsFunctional</b><br>Test class: com.tutorialsninja.qa.TestCases.ShoppingCartTest</td>
+<td></td>
+<td>0</td>
+<td>com.tutorialsninja.qa.TestCases.ShoppingCartTest@68c72235</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.RegisterTest.verifyRegisterWithMandatoryValidDetails()'><b>verifyRegisterWithMandatoryValidDetails</b><br>Test class: com.tutorialsninja.qa.TestCases.RegisterTest</td>
+<td></td>
+<td>1</td>
+<td>com.tutorialsninja.qa.TestCases.RegisterTest@10959ece</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.LogoutTest.verifyLogoutFunctionality()'><b>verifyLogoutFunctionality</b><br>Test class: com.tutorialsninja.qa.TestCases.LogoutTest</td>
+<td></td>
+<td>1</td>
+<td>com.tutorialsninja.qa.TestCases.LogoutTest@49dc7102</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.LoginTest.verifyLoginWithInvalidCredentials()'><b>verifyLoginWithInvalidCredentials</b><br>Test class: com.tutorialsninja.qa.TestCases.LoginTest</td>
+<td></td>
+<td>0</td>
+<td>com.tutorialsninja.qa.TestCases.LoginTest@6b8ca3c8</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.LoginTest.verifyLoginWithNoCredentials()'><b>verifyLoginWithNoCredentials</b><br>Test class: com.tutorialsninja.qa.TestCases.LoginTest</td>
+<td></td>
+<td>0</td>
+<td>com.tutorialsninja.qa.TestCases.LoginTest@6b8ca3c8</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.HomepageTest.vefifyLogoLink()'><b>vefifyLogoLink</b><br>Test class: com.tutorialsninja.qa.TestCases.HomepageTest</td>
+<td></td>
+<td>0</td>
+<td>com.tutorialsninja.qa.TestCases.HomepageTest@7671cb68</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.LogoutTest.verifyLogoutButtonIsAvailable()'><b>verifyLogoutButtonIsAvailable</b><br>Test class: com.tutorialsninja.qa.TestCases.LogoutTest</td>
+<td></td>
+<td>0</td>
+<td>com.tutorialsninja.qa.TestCases.LogoutTest@49dc7102</td></tr>
+<tr>
+<td title='com.tutorialsninja.qa.TestCases.RegisterTest.verifyRegisterWithNewsLetterSubscription()'><b>verifyRegisterWithNewsLetterSubscription</b><br>Test class: com.tutorialsninja.qa.TestCases.RegisterTest</td>
+<td></td>
+<td>2</td>
+<td>com.tutorialsninja.qa.TestCases.RegisterTest@10959ece</td></tr>
+</table><p>
+</body>
+</html>

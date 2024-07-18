@@ -1,118 +1,135 @@
 package com.tutorialsninja.qa.TestCases;
 
-import java.util.Date;
+import java.io.IOException;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class RegisterTest {
+import com.tutorialsninja.qa.Pages.AccountCreatedPage;
+import com.tutorialsninja.qa.Pages.HomePage;
+import com.tutorialsninja.qa.Pages.RegisterPage;
+import com.tutorialsninja.qa.TestBase.TestBase;
+import com.tutorialsninja.qa.Utilities.Utils;
+
+public class RegisterTest extends TestBase{
 	
-	public Date date;
+	public RegisterTest() throws IOException {
+		super();
+	}
+	
 	public WebDriver driver;
+	public HomePage homepage;
+	public RegisterPage registerpage;
+	public AccountCreatedPage accountsuccesspage;
+	
 	
 	@BeforeMethod
 	public void setup() {
-		date = new Date();
-		String currentDate = date.toString();
+		driver =  initializeBrowserAndOpenApplication(prop.getProperty("browser"));
+		homepage = new HomePage(driver);
+		homepage.clickOnMyAccountDropdown();
+		homepage.clickOnRegisterButton();
+		registerpage = new RegisterPage(driver);
+		accountsuccesspage = new AccountCreatedPage(driver);
 		
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("https://tutorialsninja.com/demo");
-		driver.findElement(By.linkText("My Account")).click();
-		driver.findElement(By.linkText("Register")).click();
 	}
 	
 	@Test (priority = 1)
 	public void verifyRegisterWithMandatoryValidDetails() {
-		driver.findElement(By.id("input-firstname")).sendKeys("Selenium");
-		driver.findElement(By.id("input-lastname")).sendKeys("Panda");
-		driver.findElement(By.id("input-email")).sendKeys("seleniumpanda1zsa@gmail.com");
-		driver.findElement(By.id("input-telephone")).sendKeys("342342342");
-		driver.findElement(By.id("input-password")).sendKeys("Selenium@123");
-		driver.findElement(By.id("input-confirm")).sendKeys("Selenium@123");
-		driver.findElement(By.xpath("//input[@name='agree']")).click();
-		driver.findElement(By.cssSelector("input.btn.btn-primary")).click();
-		Assert.assertTrue(driver.findElement(By.xpath("//div[@id='content']/h1")).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.xpath("//p[contains(text(), 'Congratulations! Your new account has been successfully created!')]")).isDisplayed());
+		registerpage.enterFirstname(dataProp.getProperty("firstName"));
+		registerpage.enterLastname(dataProp.getProperty("lastName"));
+		registerpage.enterEmail(Utils.emailWithDateStamp());
+		registerpage.enterTelephone(dataProp.getProperty("telephone"));
+		registerpage.enterPassword(dataProp.getProperty("validPassword"));
+		registerpage.enterConfirmPassword(dataProp.getProperty("confirmPassword"));
+		registerpage.clickOnPrivacyPolicyCheckbox();
+		registerpage.clickOnContinueRegisterButton();
+
+		Assert.assertTrue(accountsuccesspage.congratualationMessageIsDisplayed());
+		Assert.assertTrue(accountsuccesspage.yourAccountHasBeenCreatedMainMessageIsDisplayed());
 	}
 	
 	@Test (priority = 2)
 	public void verifyRegisterWithNewsLetterSubscription() {
-		driver.findElement(By.id("input-firstname")).sendKeys("Selenium");
-		driver.findElement(By.id("input-lastname")).sendKeys("Panda");
-		driver.findElement(By.id("input-email")).sendKeys("seleniumpanda1zsa@gmail.com");
-		driver.findElement(By.id("input-telephone")).sendKeys("342342342");
-		driver.findElement(By.id("input-password")).sendKeys("Selenium@123");
-		driver.findElement(By.id("input-confirm")).sendKeys("Selenium@123");
-		driver.findElement(By.xpath("//input[@name='agree']")).click();
-		driver.findElement(By.xpath("//input[@name='newsletter' and @value='1']")).click();
-		driver.findElement(By.cssSelector("input.btn.btn-primary")).click();
-		Assert.assertTrue(driver.findElement(By.xpath("//div[@id='content']/h1")).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.xpath("//p[contains(text(), 'Congratulations! Your new account has been successfully created!')]")).isDisplayed());
+		
+		registerpage.enterFirstname(dataProp.getProperty("firstName"));
+		registerpage.enterLastname(dataProp.getProperty("lastName"));
+		registerpage.enterEmail(Utils.emailWithDateStamp());
+		registerpage.enterTelephone(dataProp.getProperty("telephone"));
+		registerpage.enterPassword(dataProp.getProperty("validPassword"));
+		registerpage.enterConfirmPassword(dataProp.getProperty("confirmPassword"));
+		registerpage.clickOnPrivacyPolicyCheckbox();
+		registerpage.clickOnNewsletterSubscriptionCheckbox();
+		registerpage.clickOnContinueRegisterButton();
+		
+		Assert.assertTrue(accountsuccesspage.congratualationMessageIsDisplayed());
+		Assert.assertTrue(accountsuccesspage.yourAccountHasBeenCreatedMainMessageIsDisplayed());
 	}
 	
 	@Test (priority = 3)
 	public void verifyRegisterWithExistingEmail() {
-		driver.findElement(By.id("input-firstname")).sendKeys("Selenium");
-		driver.findElement(By.id("input-lastname")).sendKeys("Panda");
-		driver.findElement(By.id("input-email")).sendKeys("seleniumpanda@gmail.com");
-		driver.findElement(By.id("input-telephone")).sendKeys("342342342");
-		driver.findElement(By.id("input-password")).sendKeys("Selenium@123");
-		driver.findElement(By.id("input-confirm")).sendKeys("Selenium@123");
-		driver.findElement(By.xpath("//input[@name='agree']")).click();
-		driver.findElement(By.cssSelector("input.btn.btn-primary")).click();
-		String expectedMessage = "Warning: E-Mail Address is already registered!";
-		String actualMessage = driver.findElement(By.xpath("//div[@class='alert alert-danger alert-dismissible']")).getText();
+		
+		registerpage.enterFirstname(dataProp.getProperty("firstName"));
+		registerpage.enterLastname(dataProp.getProperty("lastName"));
+		registerpage.enterEmail(prop.getProperty("validEmail"));
+		registerpage.enterTelephone(dataProp.getProperty("telephone"));
+		registerpage.enterPassword(dataProp.getProperty("validPassword"));
+		registerpage.enterConfirmPassword(dataProp.getProperty("confirmPassword"));
+		registerpage.clickOnPrivacyPolicyCheckbox();
+		registerpage.clickOnContinueRegisterButton();
+		
+		String expectedMessage = dataProp.getProperty("emailAlreadyExistWarningMessage");
+		String actualMessage = registerpage.emailAlreadyExistWarningMessageGetText();
 		Assert.assertTrue(expectedMessage.equals(actualMessage));
 	}
 	
 	@Test (priority = 4)
 	public void verifyRegisterWithInvalidConfirmPassword() {
-		driver.findElement(By.id("input-firstname")).sendKeys("Selenium");
-		driver.findElement(By.id("input-lastname")).sendKeys("Panda");
-		driver.findElement(By.id("input-email")).sendKeys("seleniumpanda1zsaqa@gmail.com");
-		driver.findElement(By.id("input-telephone")).sendKeys("342342342");
-		driver.findElement(By.id("input-password")).sendKeys("Selenium@123");
-		driver.findElement(By.id("input-confirm")).sendKeys("Sel");
-		driver.findElement(By.xpath("//input[@name='agree']")).click();
-		driver.findElement(By.cssSelector("input.btn.btn-primary")).click();
-		String actualWarningMessage = driver.findElement(By.xpath("//div[@class='text-danger']")).getText();
-		String expectedWarningMessage = "Password confirmation does not match password!";
+			
+		registerpage.enterFirstname(dataProp.getProperty("firstName"));
+		registerpage.enterLastname(dataProp.getProperty("lastName"));
+		registerpage.enterEmail(Utils.emailWithDateStamp());
+		registerpage.enterTelephone(dataProp.getProperty("telephone"));
+		registerpage.enterPassword(dataProp.getProperty("validPassword"));
+		registerpage.enterConfirmPassword(dataProp.getProperty("invalidConfirm"));
+		registerpage.clickOnPrivacyPolicyCheckbox();
+		registerpage.clickOnContinueRegisterButton();
+		
+		String actualWarningMessage = registerpage.passwordConfirmDoesNotMatchWarningMessageGetText();
+		String expectedWarningMessage = dataProp.getProperty("passwordConfirmDoesNotMatchWarningMessage");
 		Assert.assertTrue(expectedWarningMessage.equals(actualWarningMessage));
 	}
 	
 	@Test (priority = 5)
 	public void verifyRegisterWithNoDetails() {
 		
-		driver.findElement(By.cssSelector("input.btn.btn-primary")).click();
+		registerpage.clickOnContinueRegisterButton();
 
-		String expectedPrivacyPolicyWarningMessage = "Warning: You must agree to the Privacy Policy!";
-		String actualPrivacyPolicyWarningMessage = driver.findElement(By.xpath("//div[contains(text(), 'Warning: You must agree to the Privacy Policy!')]")).getText();
+		String expectedPrivacyPolicyWarningMessage = dataProp.getProperty("expectedPrivacyPolicyWarningMessage");
+		String actualPrivacyPolicyWarningMessage = registerpage.actualPrivacyPolicyWarningMessageGetText();
 		Assert.assertTrue(expectedPrivacyPolicyWarningMessage.equals(actualPrivacyPolicyWarningMessage));
 		
-		String expectedFirstNameWarningMessage = "First Name must be between 1 and 32 characters!";
-		String actualFirstNameWarningMessage = driver.findElement(By.xpath("//div[contains(text(), 'First Name must be between 1 and 32 characters!')]")).getText();
+		String expectedFirstNameWarningMessage = dataProp.getProperty("expectedFirstNameWarningMessage");
+		String actualFirstNameWarningMessage = registerpage.actualFirstNameWarningMessageGetText();
 		Assert.assertTrue(expectedFirstNameWarningMessage.equals(actualFirstNameWarningMessage));
 		
-		String expectedLastNameWarningMessage = "Last Name must be between 1 and 32 characters!";
-		String actualLastNameWarningMessage = driver.findElement(By.xpath("//div[contains(text(), 'Last Name must be between 1 and 32 characters!')]")).getText();
+		String expectedLastNameWarningMessage = dataProp.getProperty("expectedLastNameWarningMessage");
+		String actualLastNameWarningMessage = registerpage.actualLastNameWarningMessageGetText();
 		Assert.assertTrue(expectedLastNameWarningMessage.equals(actualLastNameWarningMessage));
 		
-		String expectedValidEmailWarningMessage = "E-Mail Address does not appear to be valid!";
-		String actualValidEmailWarningMessage = driver.findElement(By.xpath("//div[contains(text(), 'E-Mail Address does not appear to be valid!')]")).getText();
+		String expectedValidEmailWarningMessage = dataProp.getProperty("expectedValidEmailWarningMessage");
+		String actualValidEmailWarningMessage = registerpage.actualValidEmailWarningMessageGetText();
 		Assert.assertTrue(expectedValidEmailWarningMessage.equals(actualValidEmailWarningMessage));
 		
-		String expectedTelephoneWarningMessage = "Telephone must be between 3 and 32 characters!";
-		String actualTelephoneWarningMessage = driver.findElement(By.xpath("//div[contains(text(), 'Telephone must be between 3 and 32 characters!')]")).getText();
+		String expectedTelephoneWarningMessage = dataProp.getProperty("expectedTelephoneWarningMessage");
+		String actualTelephoneWarningMessage = registerpage.actualTelephoneWarningMessageGetText();
 		Assert.assertTrue(expectedTelephoneWarningMessage.equals(actualTelephoneWarningMessage));
 		
-		String expectedPasswordWarningMessage = "Password must be between 4 and 20 characters!";
-		String actualPasswordWarningMessage = driver.findElement(By.xpath("//div[contains(text(), 'Password must be between 4 and 20 characters!')]")).getText();
+		String expectedPasswordWarningMessage = dataProp.getProperty("expectedPasswordWarningMessage");
+		String actualPasswordWarningMessage = registerpage.actualPasswordWarningMessageGetText();
 		Assert.assertTrue(expectedPasswordWarningMessage.equals(actualPasswordWarningMessage));	
 	}
 	

@@ -1,49 +1,68 @@
 package com.tutorialsninja.qa.TestCases;
 
-import org.openqa.selenium.By;
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class SearchTest {
+import com.tutorialsninja.qa.Pages.HomePage;
+import com.tutorialsninja.qa.Pages.ProductDetailsPage;
+import com.tutorialsninja.qa.Pages.ProductPage;
+import com.tutorialsninja.qa.TestBase.TestBase;
+
+public class SearchTest extends TestBase {
 	
+	public SearchTest() throws IOException {
+		super();
+	}
+
 	public WebDriver driver;
+	public HomePage homepage;
+	public ProductPage productpage;
+	public ProductDetailsPage productdetailspage;
 	
 	@BeforeMethod
 	public void setup() {
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("https://tutorialsninja.com/demo");
-		
+		driver =  initializeBrowserAndOpenApplication(prop.getProperty("browser"));
+		homepage = new HomePage(driver);
+		productpage = new ProductPage(driver);
 	}
 	
 	@Test (priority=1)
-	public void verifySearchBarIsAvilable() {
-		Assert.assertTrue(driver.findElement(By.xpath("//input[@class='form-control input-lg']")).isDisplayed() 
-				&& driver.findElement(By.xpath("//input[@class='form-control input-lg']")).isEnabled());
+	public void verifySearchBarIsAvailable() {
+		Assert.assertTrue(homepage.searchTextboxIsDisplayedAndEnabled());
 	}
 	
 	@Test (priority = 2)
 	public void verifySearchButtonIsFunctional() {
-		driver.findElement(By.cssSelector("button.btn.btn-default.btn-lg")).click();
-		Assert.assertTrue(driver.findElement(By.xpath("//h2[contains(text(), 'Products meeting the search criteria')]")).isDisplayed());
+		homepage.clickOnSeachButton();
+		Assert.assertTrue(productpage.emptySearchResultMessageIsDisplayed());
 	}
 	
 	@Test (priority=3)
 	public void verifySearchWithValidProduct() {
-		driver.findElement(By.xpath("//input[@class='form-control input-lg']")).sendKeys("HP");
-		driver.findElement(By.cssSelector("button.btn.btn-default.btn-lg")).click();
-		Assert.assertTrue(driver.findElement(By.linkText("HP LP3065")).isDisplayed());
+		homepage.enterProductInTheSearchTextbox(dataProp.getProperty("validProduct"));
+		homepage.clickOnSeachButton();
+		Assert.assertTrue(productpage.validProductIsDisplayed());
 	}
 	
 	@Test (priority= 4)
 	public void verifySearchWithInvalidProduct() {
-		driver.findElement(By.xpath("//input[@class='form-control input-lg']")).sendKeys("DELL");
-		driver.findElement(By.cssSelector("button.btn.btn-default.btn-lg")).click();
-		Assert.assertTrue(driver.findElement(By.xpath("//p[text() = 'There is no product that matches the search criteria.']")).isDisplayed());
+		homepage.enterProductInTheSearchTextbox(dataProp.getProperty("invalidProduct"));
+		homepage.clickOnSeachButton();
+		Assert.assertTrue(productpage.invalidProductWarningMessageIsDisplayed());
+	}
+	
+	@Test (priority=5)
+	public void enterValidProductDetailsPage() {
+		homepage.enterProductInTheSearchTextbox(dataProp.getProperty("validProduct"));
+		homepage.clickOnSeachButton();
+		productpage.clickOnValidProductDetails();
+		productdetailspage = new ProductDetailsPage(driver);
+		Assert.assertTrue(productdetailspage.descriptionProductDetailsIsDisplayed());
 	}
 	
 	@AfterMethod
