@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.tutorialsninja.qa.TestCases.CheckoutTest">
+      <class name="com.tutorialsninja.qa.TestCases.SearchTest">
         <methods>
-          <include name="verifyCheckoutFunctionality"/>
+          <include name="verifySearchWithValidProduct"/>
           <include name="setup"/>
           <include name="tearDown"/>
         </methods>
-      </class> <!-- com.tutorialsninja.qa.TestCases.CheckoutTest -->
+      </class> <!-- com.tutorialsninja.qa.TestCases.SearchTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
