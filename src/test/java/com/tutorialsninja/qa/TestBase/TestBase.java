@@ -52,6 +52,7 @@ public class TestBase {
 			ChromeOptions op = new ChromeOptions();
 			op.setPageLoadStrategy(PageLoadStrategy.EAGER);
 			op.addArguments("--start-maximized");
+			op.addArguments(Arrays.asList("--headless", "--no-sandbox"));
 			op.addArguments("--incognito");
 			op.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation", "disable-infobars"));
 			driver = new ChromeDriver(op);
