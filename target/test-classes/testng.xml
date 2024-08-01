@@ -10,7 +10,7 @@
 	<test thread-count="7" name="Test">
 		<classes>
 			<class name="com.tutorialsninja.qa.TestCases.SearchTest" />
-			<!--  
+			
 			
 			<class name="com.tutorialsninja.qa.TestCases.HomepageTest" />
 			<class name="com.tutorialsninja.qa.TestCases.LogoutTest" />
@@ -19,7 +19,7 @@
 			<class name="com.tutorialsninja.qa.TestCases.ShoppingCartTest" />
 			<class name="com.tutorialsninja.qa.TestCases.RegisterTest" /> 
 			
-			-->
+			
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->

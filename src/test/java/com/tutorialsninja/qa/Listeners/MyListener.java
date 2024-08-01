@@ -68,6 +68,7 @@ public class MyListener implements ITestListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		// in the test failed it will attach the screenshot and past the details of the failed test
 		extentTest.addScreenCaptureFromPath(destinationFile);
 		extentTest.log(Status.INFO, result.getThrowable());
 		extentTest.log(Status.FAIL, testName + "got failed");
@@ -84,6 +85,7 @@ public class MyListener implements ITestListener {
 	public void onFinish(ITestContext context) {
 		System.out.println("Project Execution Finished");
 		extentReport.flush();
+		// opens up the report directly at the end of the execution
 		String pathOfExtentReport = System.getProperty("user.dir") + "\\test-output\\ExtentReports\\extentreporterTN.html";
 		File extentReport = new File(pathOfExtentReport);
 		try {
