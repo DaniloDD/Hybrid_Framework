@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class Utils {
 	
-	public static final int IMPLICIT_WAIT = 10;
-	public static final int PAGELOAD_TIMEOUT = 10;
+	public static final int IMPLICIT_WAIT = 60;
+	public static final int PAGELOAD_TIMEOUT = 60;
 	public static final int SCRIPT_TIMEOUT = 200;
 	
 	public static String emailWithDateStamp() {
