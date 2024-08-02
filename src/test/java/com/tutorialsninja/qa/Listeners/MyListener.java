@@ -86,7 +86,6 @@ public class MyListener implements ITestListener {
 		System.out.println("Project Execution Finished");
 		extentReport.flush();
 		// opens up the report directly at the end of the execution
-		/*
 		String pathOfExtentReport = System.getProperty("user.dir") + "\\test-output\\ExtentReports\\extentreporterTN.html";
 		File extentReport = new File(pathOfExtentReport);
 		try {
@@ -94,7 +93,6 @@ public class MyListener implements ITestListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		*/
 	}
 
 }
